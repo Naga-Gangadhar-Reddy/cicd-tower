@@ -9,7 +9,7 @@
   tasks:
     - name: Install the webserver software
       yum:
-        name: "{{packages}}"
+        name: "{{ packages }}"
         state: installed
 
     - name: Start and persistently enable httpd
@@ -19,13 +19,24 @@
         state: started
 
     - name: Open the port in the firewall
-      firewall:
+      firewalld:
         service: http
         state: enabled
         immediate: true
         permanent: true
 
-    - copy:
+    - name: Install sample web content 
+      copy:
         content: "Hello world, v1.0\n"
         dest: /var/www/html/index.html
+    
+    - name: Smoke Test
+      uri:
+        url: "http://{{ inventory_hostname }}"
+        return_content: yes
+        status_code: 200
+      register: response
+      delegate_to: localhost
+      become: no
+      failed_when: '"Hello World" not in resonse.content'
 ...

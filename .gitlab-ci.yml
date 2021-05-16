@@ -1,6 +1,6 @@
 variables:
   LAUNCH_TOWER_JOB: tower-cli job launch --monitor --insecure
-  TOWER_CREDENTIALS: -u admin -p redhat -h tower.lab.example.com
+  TOWER_CREDENTIALS: -u admin -p redhat123 -h tower.lab.example.com
   GIT_REPO: http://git:redhat321@git.lab.example.com:8081/git/cicd-tower.git
 
 stages:
